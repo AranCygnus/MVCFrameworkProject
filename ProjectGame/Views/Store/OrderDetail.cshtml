@@ -1,0 +1,79 @@
+﻿@model ProjectGame.Models.Order
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/styleStore.css" asp-append-version="true" />
+</head>
+
+<section>
+    <div class="row">
+        <!---------- Aside Sidebar ---------->
+        @await Html.PartialAsync("_StoreAside")
+
+        <!---------- Main Content---------->
+        <div class="col-md-9">
+            <h2>Order #@Model.ID</h2>
+            <hr />
+            <h5>Order Date: @Model.OrderDate.ToString("yyyy/MM/dd HH:mm")</h5>
+            <!---------- Status ---------->
+            <h5>
+                <strong>Statu: </strong>
+                @switch (Model.Status)
+                {
+                    case OrderStatus.Paid:
+                        <span class="badge bg-success text-white" >Paid</span>
+                        break;
+                    case OrderStatus.Unpaid:
+                        <span class="badge bg-warning text-dark" >Unpaid</span>
+                        break;
+                    case OrderStatus.Shipped:
+                        <span class="badge bg-info text-dark" >Shipped</span>
+                        break;
+                    case OrderStatus.Cancelled:
+                        <span class="badge bg-danger text-white" >Cancelled</span>
+                        break;
+                    case OrderStatus.Completed:
+                        <span class="badge bg-primary text-white" >Completed</span>
+                        break;
+                    default:
+                        break;
+                }
+            </h5>
+
+            <!---------- Table ---------->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Game</th>
+                        <th>Quantity</th>
+                        <th>Unit Price</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.OrderDetails)
+                    {
+                        <tr>
+                            <td>@item.Game.Title</td>
+                            <td>@item.Quantity</td>
+                            <td>@item.UnitPrice.ToString("C0")</td>
+                            <td>@($"{item.Game.Price * item.Quantity:C0}")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <!---------- Total ---------->
+            <h5 class="fw-bold text-end text-primary">
+                Total : @Model.OrderDetails.Sum(d => d.UnitPrice * d.Quantity).ToString("C0")
+            </h5>
+
+            <!---------- Button ---------->
+            <a asp-action="History" class="btn btn-secondary">Back</a>
+
+        </div>
+    </div>
+</section>
+

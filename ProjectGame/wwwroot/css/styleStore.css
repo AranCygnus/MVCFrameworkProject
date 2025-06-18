@@ -1,0 +1,165 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    scroll-behavior: smooth;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root {
+    --bg-black-900: #f2f2f2;
+    --bg-black-100: #fdf9ff;
+    --bg-black-50: #e8dfec;
+    --text-black-900: #302e4d;
+    --text-black-700: #504e70;
+    --text-game: #0070D1;
+    --text-box: #E80000;
+}
+
+body.dark {
+    --bg-black-900: #151515;
+    --bg-black-100: #222222;
+    --bg-black-50: #393939;
+    --text-black-900: #ffffff;
+    --text-black-700: #ededed;
+    --text-game: #107C10;
+    --text-box: #ffd700;
+}
+
+section {
+    margin: 6.5rem 0;
+    background: var(--bg-black-900);
+    font-family: 'Poppins', sans-serif;
+}
+
+h2, h5, ul, li, th, td, p {
+    color: var(--text-black-900);
+}
+
+
+/* Aside Sidebar */
+.aside {
+    background-color: var(--bg-black-100);
+    position: relative;
+    left: 0;
+    top: 0;
+    padding: 30px;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    border-radius: .5rem;
+    z-index: 10;
+}
+
+.aside .nav-title {
+    position: absolute;
+    top: 1.5rem;
+    font-size: 1.2rem;
+    border-bottom: 1px solid var(--bg-black-50);
+}
+
+.aside .nav-title p {
+    font-weight: 500;
+}
+
+.aside .nav-title p span {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.aside .nav-title p .logo-game {
+    font-family: "Pixelify Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    color: var(--text-game);
+}
+
+.aside .nav-title p .logo-box {
+    font-family: "Pixelify Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    color: var(--text-box);
+}
+
+.aside .nav-title .user-name {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--text-black-700);
+}
+
+.aside .nav {
+    display: flex;
+    flex-direction: column;
+    margin-top: 8rem;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.aside .nav li {
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.aside .nav li a {
+    color: var(--text-black-900);
+    padding: .3rem 1rem;
+    transition: .3s;
+}
+
+.aside .nav li a i {
+    margin-right: 1rem;
+}
+
+.aside .nav li a:hover{
+    color: var(--text-box);
+}
+
+
+/* Cart Count */
+.cart-count {
+    font-size: .75rem;
+    margin-left: .8rem;
+    vertical-align: baseline;
+}
+
+
+/* Platform Filter */
+.platform-filter {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    background: var(--bg-black-100);
+    border-radius: .5rem;
+    z-index: 10;
+}
+
+.platform-filter a {
+    font-size: 1.2rem;
+    text-decoration: none;
+    color: var(--text-black-900);
+    font-weight: 600;
+    margin: .8rem 1.2rem;
+    transition: .3s;
+}
+
+.platform-filter a:hover {
+    color: var(--text-box);
+}
+
+
+/* Game Card */
+.clamp-3-lines {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 4.5em;
+}

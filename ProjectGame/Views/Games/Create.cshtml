@@ -1,0 +1,66 @@
+﻿@model ProjectGame.Models.Game
+@{
+    ViewData["Title"] = "Create Game";
+}
+<head>
+    <link rel="stylesheet" href="~/css/styleGame.css" asp-append-version="true" />
+</head>
+
+
+<section>
+    <div class="row">
+        <!---------- Aside Sidebar ---------->
+        @await Html.PartialAsync("_GameAside")
+
+        <!---------- Main Content---------->
+        <div class="col-md-9">
+            <h2>Create New Game</h2>
+            <hr class="my-3" />
+            <div class="container">
+                <form asp-action="Create" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-6" style="height: 580px;">
+                            <div class="form-group mb-3">
+                                <label asp-for="Title">Game Title</label>
+                                <input asp-for="Title" class="form-control" />
+                            </div>
+                            <div class="form-group mb-3">
+                                <label asp-for="PlatformID">Platform</label>
+                                <select asp-for="PlatformID" class="form-control" asp-items="ViewBag.PlatformID"></select>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label asp-for="ReleaseDate">Release Date</label>
+                                <input asp-for="ReleaseDate" class="form-control" type="date" lang="en-CA" />
+                            </div>
+                            <div class="form-group mb-3"> 
+                                <label asp-for="Price">Price</label>
+                                <input asp-for="Price" class="form-control" />
+                            </div>
+                            <div class="form-group mb-3">
+                                <label asp="ImageUrl">Cover Image</label>
+                                <input asp-for="DataFiles" id="formFile" class="form-control mt-1" type="file" name="DataFiles" accept=".jpg,.jpeg,.png" />
+                            </div>
+                        </div>
+
+                        <!---------- Preview Image ---------->
+                        <div class="col-md-6" id="previewContainer" style="display: none;">
+                            <label class="form-label">Preview Cover Image</label>
+                            <div class="p-2">
+                                <img id="imgPreview" src="#" alt="Image preview" class="img-fluid" style="max-height: 500px;" />
+                            </div>
+                        </div>
+
+                        <!---------- Button ---------->
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-primary m-2" style="width:150px;">Create</button>
+                            <a asp-action="Index" class="btn btn-outline-secondary m-2" style="width:150px;">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script src="~/js/scriptCreate.js"></script>

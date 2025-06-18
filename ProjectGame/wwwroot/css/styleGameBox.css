@@ -1,0 +1,187 @@
+﻿
+:root {
+    --color-back: #848484;
+    --color-text: #08083A;
+    --color-bar: #FF017B;
+    --color-orange: #F7931E;
+    --color-green: #009245;
+    --color-red: #FF0000;
+    --color-blue: #0000FF;
+    --color-bg: #b2ffff;
+}
+
+.st0 {
+    fill: var(--color-back);
+}
+
+.st1 {
+    fill: var(--color-text);
+}
+
+.st2 {
+    fill: var(--color-bar);
+}
+
+.st3 {
+    fill: var(--color-orange);
+}
+
+.st4 {
+    fill: var(--color-green);
+}
+
+.st5 {
+    fill: var(--color-red);
+}
+
+.st6 {
+    fill: var(--color-blue);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to bottom, var(--color-bg), #ededed);
+}
+
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    transform: scale(2);
+}
+
+.logo {
+    width: 100%;
+    height: auto;
+    transform-origin: center center;
+}
+
+#ellipse {
+    transform: scale(0);
+    transform-origin: center;
+    animation: popScale .8s ease-out forwards;
+}
+
+#bar {
+    animation: slideInBar 1.2s ease-out forwards;
+}
+
+#G {
+    stroke: var(--color-text);
+    stroke-width: 2;
+    fill: var(--color-text);
+    stroke-dasharray: 2000;
+    stroke-dashoffset: 2000;
+    fill-opacity: 0;
+    visibility: visible;
+}
+
+#bottom, #right, #left, #up {
+    transform: translateY(-100px);
+    opacity: 0;
+}
+
+
+#A, #M, #E, #B, #O, #X {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+#A.visible,
+#M.visible,
+#E.visible,
+#B.visible,
+#O.visible,
+#X.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.progress-bar {
+    width: 90%;
+    max-width: 75%;
+    height: 15px;
+    margin-top: 20px;
+    overflow: hidden;
+    border-radius: 7.5px;
+    border: 2px solid var(--color-red);
+}
+
+.progress-fill {
+    width: 0%;
+    height: 100%;
+    background-color: var(--color-orange);
+}
+
+
+/* Animation */
+@keyframes popScale {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.5);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes dropBounce {
+    0% {
+        transform: translateY(-150px);
+        opacity: 0;
+    }
+
+    80% {
+        transform: translateY(8px);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInBar {
+    from {
+        transform: translateX(640px);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+
+@keyframes drawPath {
+    0% {
+        stroke-dashoffset: 2000;
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes fillBar {
+    from {
+        width: 0%;
+    }
+
+    to {
+        width: 100%;
+    }
+}

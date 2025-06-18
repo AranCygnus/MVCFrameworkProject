@@ -1,0 +1,100 @@
+﻿@model List<ProjectGame.Models.ShoppingCartItem>
+
+@{
+    ViewData["Title"] = "My cart";
+    var total = Model.Sum(i => i.Game.Price * i.Quantity);
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/styleStore.css" asp-append-version="true" />
+</head>
+
+<section>
+    <div class="row">
+        <!---------- Aside Sidebar ---------->
+        @await Html.PartialAsync("_StoreAside")
+
+        <!---------- Main Content---------->
+        <div class="col-md-9">
+            <h2>My cart</h2>
+
+            <hr class="my-3"/>
+            
+            @if (Model == null || !Model.Any())
+            {
+                <h4 class="text-danger">Shopping cart is empty!</h4>
+                <a asp-controller="Store" asp-action="Index" class="btn btn-outline-secondary mt-2">Continue Shopping</a>
+            }
+            else
+            {
+                <!---------- Table ---------->
+                <table class="table table-bordered align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Game Title</th>
+                            <th class="text-center">Quantity</th>
+                            <th>Price</th>
+                            <th>Subtotal</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Game.Title</td>
+
+                                <td class="text-center">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <form asp-action="UpdateQuantity" method="post" class="me-1">
+                                            <input type="hidden" name="gameId" value="@item.GameID" />
+                                            <input type="hidden" name="change" value="-1" />
+                                            <button type="submit" class="btn btn-outline-secondary btn-sm">-</button>
+                                        </form>
+
+                                        <span class="mx-2">@item.Quantity</span>
+
+                                        <form asp-action="UpdateQuantity" method="post" class="ms-1">
+                                            <input type="hidden" name="gameId" value="@item.GameID" />
+                                            <input type="hidden" name="change" value="1" />
+                                            <button type="submit" class="btn btn-outline-secondary btn-sm">+</button>
+                                        </form>
+                                    </div>
+                                </td>
+
+                                <td>@item.Game.Price.ToString("C0")</td>
+                                <td>@($"{item.Game.Price * item.Quantity:C0}")</td>
+
+                                <td>
+                                    <form asp-action="RemoveFromCart" method="post">
+                                        <input type="hidden" name="gameId" value="@item.GameID" />
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <!---------- Total ---------->
+                <div class="d-flex flex-row-reverse mt-2">
+                    <h5 class="fw-bold m-2 p-2">Total : <span class="text-danger fw-bold m-2">@total.ToString("C0")</span></h5>
+
+                    <form asp-action="ClearCart" method="post" class="d-inline">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-outline-danger m-2">Empty the Cart</button>
+                    </form>
+                </div>
+                
+                <hr />
+                
+                <!---------- Button ---------->
+                <div class="d-flex justify-content-between mt-3">
+                    <a asp-controller="Store" asp-action="Index" class="btn btn-outline-secondary">Continue Shopping</a>
+                    <a asp-action="Checkout" class="btn btn-primary">Checkout</a>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+

@@ -1,0 +1,82 @@
+﻿@model OrderDetailViewModel
+@using ProjectGame.Models
+@using ProjectGame.ViewModels
+
+
+@{
+    ViewData["Title"] = "Customer Order Detail";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/styleStore.css" asp-append-version="true" />
+</head>
+
+<section>
+    <div class="row">
+        <!---------- Aside Sidebar ---------->
+        @await Html.PartialAsync("_GameAside")
+
+        <!---------- Main Content---------->
+        <div class="col-md-9">
+            <h2>Order By: @Model.Name</h2>
+            <hr class="my-3"/>
+            <h5>Email : @Model.UserEmail</h5>
+            <h5>Order Date : @Model.OrderDate.ToString("yyyy/MM/dd HH:mm")</h5>
+
+            <p>
+                <strong>Status : </strong>
+                @switch (Model.Status)
+                {
+                    case OrderStatus.Paid:
+                        <span class="badge bg-success text-white" >Paid</span>
+                        break;
+                    case OrderStatus.Unpaid:
+                        <span class="badge bg-warning text-dark" >Unpaid</span>
+                        break;
+                    case OrderStatus.Shipped:
+                        <span class="badge bg-info text-dark" >Shipped</span>
+                        break;
+                    case OrderStatus.Cancelled:
+                        <span class="badge bg-danger text-white" >Cancelled</span>
+                        break;
+                    case OrderStatus.Completed:
+                        <span class="badge bg-primary text-white" >Completed</span>
+                        break;
+                }
+            </p>
+
+            <hr class="my-3" />
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Game</th>
+                        <th>Quantity</th>
+                        <th>Unit Price</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td>@item.GameTitle</td>
+                            <td>@item.Quantity</td>
+                            <td>@item.UnitPrice.ToString("C0")</td>
+                            <td>@($"{item.UnitPrice * item.Quantity:C0}")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <h5 class="fw-bold text-end text-primary">
+                Total: @Model.Total.ToString("C0")
+            </h5>
+
+            <div class="mt-3 text-end">
+                <a asp-action="CustomerOrders" asp-controller="Games" class="btn btn-outline-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+</section>
+

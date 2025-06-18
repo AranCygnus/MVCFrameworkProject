@@ -1,0 +1,91 @@
+﻿@{
+    ViewData["Title"] = "Payment";
+}
+
+<head>
+    <!---------- CSS ---------->
+    <link rel="stylesheet" href="~/css/styleStore.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/stylePayment.css" asp-append-version="true" />
+</head>
+
+<section>
+    <div class="row">
+        <!---------- Aside Sidebar ---------->
+        @await Html.PartialAsync("_StoreAside")
+
+        <!---------- Main Content---------->
+        <div class="col-md-9">
+            <h2 class="text-center">Secure Payment</h2>
+
+            <hr class="my-3" />
+
+            <div class="payment-wrapper">
+                <div class="card-container">
+                    <div class="front">
+                        <div class="image">
+                            <img src="~/images/card/chip.png" alt="">
+                            <img src="" class="card-brand-img" alt="Brand" style="height: 80px; display: none;" />
+                        </div>
+                        <div class="card-number-box">#### #### #### ####</div>
+                        <div class="flexbox">
+                            <div class="box">
+                                <span>card holder</span>
+                                <div class="card-holder-name">full name</div>
+                            </div>
+                            <div class="box">
+                                <span>expires</span>
+                                <div class="expiration">MM/YY</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="back">
+                        <div class="stripe"></div>
+                        <div class="box">
+                            <span>cvv</span>
+                            <div class="cvv-box"></div>
+                            <img src="" class="card-brand-img" alt="Brand" style="height: 50px; display: none;" />
+                        </div>
+                    </div>
+
+                </div>
+
+                <form action="">
+                    <div class="inputBox">
+                        <span>card number</span>
+                        <input type="text" maxlength="19" class="card-number-input" />
+                    </div>
+                    <div class="inputBox">
+                        <span>card holder</span>
+                        <input type="text" class="card-holder-input">
+                    </div>
+                    <div class="flexbox">
+                        <div class="inputBox">
+                            <span>expiration date</span>
+                            <div class="d-flex gap-2">
+                                <select class="month-input"></select>
+                                <select class="year-input"></select>
+                            </div>
+                        </div>
+                        <div class="inputBox">
+                            <span>cvv</span>
+                            <input type="text" maxlength="3" class="cvv-input" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!---------- Button ---------->
+            <div class="d-flex justify-content-center align-items-center">
+                <form asp-action="MarkPaid" method="post" class="w-50 mx-auto p-4 rounded shadow-sm">
+                    <input type="hidden" name="orderId" value="@ViewData["OrderId"]" />
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-success w-100" onclick="return confirm('Are you sure you want to confirm this payment?');">Confirm Payment</button>
+                </form>
+        </div>
+    </div>
+</section>
+
+
+<!---------- JS ---------->
+<script src="~/js/scriptPayment.js"></script>

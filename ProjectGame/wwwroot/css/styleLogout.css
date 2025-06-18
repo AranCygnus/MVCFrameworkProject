@@ -1,0 +1,46 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+
+
+:root {
+    --bg-black-900: #f2f2f2;
+    --bg-black-100: #fdf9ff;
+    --bg-black-50: #e8dfec;
+    --text-black-900: #302e4d;
+    --text-black-700: #504e70;
+    --text-game: #0070D1;
+    --text-box: #E80000;
+    --pixel-size: 15px;
+}
+
+body.dark {
+    --bg-black-900: #151515;
+    --bg-black-100: #222222;
+    --bg-black-50: #393939;
+    --text-black-900: #ffffff;
+    --text-black-700: #ededed;
+    --text-game: #107C10;
+    --text-box: #ffd700;
+}
+
+.pixel-text {
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    color: var(--text-black-900);
+}
+
+#heart-container {
+    position: relative;
+    width: calc(16 * var(--pixel-size));
+    height: calc(16* var(--pixel-size));
+}
+
+.pixel {
+    position: absolute;
+    width: var(--pixel-size);
+    height: var(--pixel-size);
+    background: var(--text-box);
+    opacity: 0;
+    transition: top 0.5s ease-out, opacity 0.5s ease-out;
+}

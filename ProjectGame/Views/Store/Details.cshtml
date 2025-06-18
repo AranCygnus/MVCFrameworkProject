@@ -1,0 +1,60 @@
+﻿@model ProjectGame.Models.Game
+
+@using ProjectGame.Models
+
+@{
+    ViewData["Title"] = "Game Details";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/styleStore.css" asp-append-version="true" />
+</head>
+
+<section>
+    <div class="row">
+        <!---------- Aside Sidebar ---------->
+        @await Html.PartialAsync("_StoreAside")
+
+        <!---------- Main Content---------->
+        <div class="col-md-9">
+            <div class="card h-100 w-75 shadow-lg mx-auto">
+                @if (Model.DataFiles != null)
+                {
+                    <img src="/Games/GetImage/@Model.ID" alt="@Model.Title" class="card-img-top" style="object-fit: contain; height: 500px; width: 100%;" />
+                }
+                else if (Model.PlatformID == 1)
+                {
+                    <img src="~/images/noimages/PS5NoImage.jpg" alt="@Model.Title" class="card-img-top" style="object-fit: contain; height: 500px; width: 100%;" />
+                }
+                else if (Model.PlatformID == 2)
+                {
+                    <img src="~/images/noimages/NSNoImage.jpg" alt="@Model.Title" class="card-img-top" style="object-fit: contain; height: 500px; width: 100%;" />
+                }
+                else
+                {
+                    <img src="~/images/noimages/XboxNoImage.jpg" alt="@Model.Title" class="card-img-top" style="object-fit: contain; height: 500px; width: 100%;" />
+                }
+        
+                <div class="card-body">
+                    <h3 class="card-title clamp-3-lines text-black mb-2">@Model.Title</h3>
+                    <p class="text-muted text-black mb-1">Platform : @Model.Platform?.Name</p>
+                    <p class="text-muted text-black mb-1">ReleaseDate : @Model.ReleaseDate.ToString("yyyy/MM/dd")</p>
+                    <p class="fw-bold text-primary mb-2">@Model.Price.ToString("C0")</p>
+
+                    <!---------- Button ---------->
+                    <div class="d-flex gap-2 mt-4">
+                        <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
+
+                        <form asp-controller="Store" asp-action="AddToCart" method="post">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="gameId" value="@Model.ID" />
+                            <button type="submit" class="btn btn-success">Add to Cart</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+

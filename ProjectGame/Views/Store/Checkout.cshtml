@@ -1,0 +1,62 @@
+﻿@model IEnumerable<ProjectGame.Models.ShoppingCartItem>
+
+@{
+    ViewData["Title"] = "Checkout Order";
+    var total = Model.Sum(i => i.Game.Price * i.Quantity);
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/styleStore.css" asp-append-version="true" />
+</head>
+
+<section>
+    <div class="row">
+        <!---------- Aside Sidebar ---------->
+        @await Html.PartialAsync("_StoreAside")
+
+        <!---------- Main Content---------->
+        <div class="col-md-9">
+            <h2>Confirm Your Order</h2>
+
+            <hr class="my-3"/>
+            <form asp-action="CheckoutConfirm" method="post">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Game Title</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Game.Title</td>
+                                <td>@item.Quantity</td>
+                                <td>@item.Game.Price.ToString("C0")</td>
+                                <td>@($"{item.Game.Price * item.Quantity:C0}")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <!---------- Total ---------->
+                <div class="d-flex flex-row-reverse mt-2">
+                    <h5 class="fw-bold m-2 p-2">Total : <span class="text-danger fw-bold m-2">@total.ToString("C0")</span></h5>
+                </div>
+
+                <hr />
+
+                <!---------- Button ---------->
+                <div class="d-flex justify-content-between mt-3">
+                    <a asp-action="Cart" class="btn btn-outline-secondary">Back to Cart</a>
+                    <button type="submit" class="btn btn-success">Confirm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+

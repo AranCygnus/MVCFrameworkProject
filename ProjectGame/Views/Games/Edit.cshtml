@@ -1,0 +1,84 @@
+﻿@model ProjectGame.Models.Game
+
+@{
+    ViewData["Title"] = "Edit Game";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/styleGame.css" asp-append-version="true" />
+</head>
+
+
+
+<section>
+    <div class="row">
+        <!---------- Aside Sidebar ---------->
+        @await Html.PartialAsync("_GameAside")
+
+        <!---------- Main Content---------->
+        <div class="col-md-9">
+            <h2>Edit Game</h2>
+            <hr class="my-3" />
+            <div class="container">
+                <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="ID" />
+                    <div class="row">
+                        <div class="col-md-6" style="height:580px;">
+                            <div class="form-group mb-3">
+                                <label asp-for="Title">Game Title</label>
+                                <input asp-for="Title" class="form-control" />
+                            </div>
+                            <div class="form-group mb-3">
+                                <label asp-for="PlatformID">Platform</label>
+                                <select asp-for="PlatformID" class="form-control" asp-items="ViewBag.PlatformID"></select>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label asp-for="ReleaseDate">Release Date</label>
+                                <input asp-for="ReleaseDate" class="form-control" type="date" value="@Model.ReleaseDate.ToString("yyyy-MM-dd")"/>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label asp-for="Price">Price</label>
+                                <input asp-for="Price" class="form-control" value="@Model.Price.ToString("0")" />
+                            </div>
+                            <div class="form-group mb-3">
+                                <label asp="ImageUrl">Cover Image</label>
+                                <input asp="ImageUrl" id="editFile" class="form-control mt-1" type="file" name="DataFiles" accept=".jpg,.jpeg,.png" />
+                            </div>
+                        </div>
+
+                        <!---------- Preview Image ---------->
+                        <div class="col-md-6">
+                            <label class="form-label">Preview Cover Image</label>
+                            <div class="p-2" id="previewEdit">
+                                @if (Model.DataFiles != null)
+                                {
+                                    <img asp-append-version="true" id="imgEdit" src="/Games/GetImage/@Model.ID" data-original="/Games/GetImage/@Model.ID" alt="Image preview" class="img-fluid" style="max-height: 500px;" onerror="this.style.display='none'" />
+                                }
+                                else if (Model.PlatformID == 1)
+                                {
+                                    <img asp-append-version="true" id="imgEdit" src="~/images/noimages/PS5NoImage.jpg" data-original="~/images/noimages/PS5NoImage.jpg" alt="Image preview" class="img-fluid" style="max-height: 500px;" onerror="this.style.display='none'" />
+                                }
+                                else if (Model.PlatformID == 2)
+                                {
+                                    <img asp-append-version="true" id="imgEdit" src="~/images/noimages/NSNoImage.jpg" data-original="~/images/noimages/NSNoImage.jpg" alt="Image preview" class="img-fluid" style="max-height: 500px;" onerror="this.style.display='none'" />
+                                }
+                                else
+                                {
+                                    <img asp-append-version="true" id="imgEdit" src="~/images/noimages/XboxNoImage.jpg" data-original="~/images/noimages/XboxNoImage.jpg" alt="Image preview" class="img-fluid" style="max-height: 500px;" onerror="this.style.display='none'" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <!---------- Button ---------->
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-success m-2" style="width:150px;">Save</button>
+                        <a asp-action="Index" class="btn btn-secondary m-2" style="width:150px;">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/js/scriptEdit.js"></script>

@@ -1,0 +1,113 @@
+﻿@page
+@model CombinedAuthModel
+
+@{
+    ViewData["Title"] = "Login & Register";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/styleCombined.css" asp-append-version="true" />
+</head>
+
+<section>
+
+    <div class="main-combined" id="container">
+
+        <!---------- Register ---------->
+        <div class="form-container sign-up">
+
+
+            <form id="registerForm" asp-page-handler="Register" method="post">
+                <input type="hidden" asp-for="ReturnUrl" id="ReturnUrl_Register" value="@(Model.ReturnUrl ?? "/")" />
+                <h1 class="combined-title">Create Account</h1>
+
+                <div class="info-group">
+                    <input asp-for="Register.Name" autocomplete="username" aria-required="true" placeholder="Name"/>
+                    <span asp-validation-for="Register.Name" class="error-tooltip"></span>
+                </div>
+
+                <div class="info-group">
+                    <input asp-for="Register.Email" autocomplete="email" aria-required="true" placeholder="Email"/>
+                    <span asp-validation-for="Register.Email" class="error-tooltip"></span>
+                </div>
+
+                <div class="info-group">
+                    <input asp-for="Register.Password" autocomplete="new-password" aria-required="true" type="password" placeholder="Password" />
+                    <span asp-validation-for="Register.Password" class="error-tooltip"></span>
+                </div>
+
+                <div class="info-group">
+                    <input asp-for="Register.ConfirmPassword" autocomplete="new-password" aria-required="true" type="password" placeholder="Confirm Password" />
+                    <span asp-validation-for="Register.ConfirmPassword" class="error-tooltip"></span>
+                </div>
+
+                <button id="registerSubmit" type="submit">Sign Up</button>
+            </form>
+
+        </div>
+
+
+
+        <!---------- Login ---------->
+        <div class="form-container sign-in">
+
+            <form id="account" asp-page-handler="Login" method="post">
+                <input type="hidden" asp-for="ReturnUrl" id="ReturnUrl_Login" value="@Model.ReturnUrl" />
+                
+                <div class="form-error-tooltip">
+                    <div asp-validation-summary="ModelOnly" class="text-model-only" role="alert"></div>
+                </div>
+                
+                <h1 class="combined-title">Sign In</h1>
+
+                <div class="info-group">
+                    <input asp-for="Login.Email" autocomplete="email" aria-required="true" placeholder="Email"/>
+                    <span asp-validation-for="Login.Email" class="error-tooltip"></span>
+                </div>
+
+                <div class="info-group">
+                    <input asp-for="Login.Password" autocomplete="current-password" aria-required="true" type="password" placeholder="Password" />
+                    <span asp-validation-for="Login.Password" class="error-tooltip"></span>
+                </div>
+
+                <div class="remember-me-group">
+                    <input asp-for="Login.RememberMe" type="checkbox" class="checkbox" id="rememberMe" />
+                    <label asp-for="Login.RememberMe">Remember Me</label>
+                </div>
+
+                <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+
+                <button id="login-submit" type="submit">Sign In</button>
+
+
+            </form>
+        </div>
+
+
+        <div class="toggle-container">
+            <div class="toggle">
+
+                <div class="toggle-panel toggle-left">
+                    <h1>Welcome Back!</h1>
+                    <p>Enter your personal details to use all of site features</p>
+                    <button class="hidden" id="login">Log In</button>
+                </div>
+
+                <div class="toggle-panel toggle-right">
+                    <h1>Hello, Friend!</h1>
+                    <p>Register with your personal details to use all of site features</p>
+                    <button class="hidden" id="register">Register</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<!---------- JS ---------->
+<script src="~/js/scriptCombined.js"></script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

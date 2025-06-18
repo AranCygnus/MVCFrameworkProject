@@ -1,0 +1,123 @@
+﻿@model IPagedList<ProjectGame.Models.Game>
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+
+@{
+    ViewData["Title"] = "Games List";
+    var currentPlatform = ViewData["CurrentPlatform"]?.ToString();
+    var currentSearch = ViewData["CurrentFilter"]?.ToString();
+}
+
+<head>
+    <!---------- CSS ---------->
+    <link rel="stylesheet" href="~/css/styleStore.css" asp-append-version="true" />
+    <!---------- icon ---------->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+
+<section>
+    <div class="row">
+        <!---------- Aside Sidebar ---------->
+        @await Html.PartialAsync("_StoreAside")
+
+        <!---------- Main Content---------->
+        <div class="col-md-9">
+        <!---------- Platform Filter---------->
+             <nav class="platform-filter">
+                 <a href="@Url.Action("Index", new { PlatformID = "" })" class="@(string.IsNullOrEmpty(currentPlatform)) all-hover">
+                     <img src="~/images/other/all-game.png" alt="All" style="height:24px; margin-right:4px;"> All
+                 </a>
+                 <a href="@Url.Action("Index", new { PlatformID = "1" })" class="@(currentPlatform == "1") ps5-hover">
+                     <img src="~/images/other/playstation-logo.png" alt="PS5" style="height:24px;"> PS5
+                 </a>
+                 <a href="@Url.Action("Index", new { PlatformID = "2" })" class="@(currentPlatform == "2") switch-hover">
+                     <img src="~/images/other/nintendo-switch-logo.png" alt="Switch" style="height:24px;"> Switch
+                 </a>
+                 <a href="@Url.Action("Index", new { PlatformID = "3" })" class="@(currentPlatform == "3") xbox-hover">
+                     <img src="~/images/other/xbox-logo.png" alt="Xbox" style="height:24px;"> Xbox
+                 </a>
+             </nav>
+
+
+            <!---------- Search Bar ---------->
+            @using (Html.BeginForm("Index", "Store", FormMethod.Get))
+            {
+                <div class="d-flex my-3">
+                    <p class="form-label fw-bold m-2">Keywords :</p>
+                    @Html.TextBox("sSearch", currentSearch, new { @class = "form-control me-2", style = "width:150px; height: 35px", placeholder = "Enter Keywords" })
+                    @Html.Hidden("PlatformID", ViewData["CurrentPlatform"] as string)
+                    <input type="submit" value="Search" class="btn btn-primary" style="width:100px; height: 35px" />
+                </div>
+            }
+            <!---------- Game Card List ---------->
+            <div class="row row-cols-1 row-cols-md-4 g-4">
+                @foreach (var game in Model)
+                {
+                    <div class="col h-100">
+                        <div class="card h-100 shadow-sm">
+                            @if (game.DataFiles != null)
+                            {
+                                <img src="/Games/GetImage/@game.ID" alt="@game.Title" class="card-img-top" style="object-fit:cover; height:300px;" />
+                            }
+                            else if (game.PlatformID == 1)
+                            {
+                                <img src="~/images/noimages/PS5NoImage.jpg" alt="@game.Title" class="card-img-top" style="object-fit:cover; height:300px;" />
+                            }
+                            else if (game.PlatformID == 2)
+                            {
+                                <img src="~/images/noimages/NSNoImage.jpg" alt="@game.Title" class="card-img-top" style="object-fit:cover; height:300px;" />
+                            }
+                            else
+                            {
+                                <img src="~/images/noimages/XboxNoImage.jpg" alt="@game.Title" class="card-img-top" style="object-fit:cover; height:300px;" />
+                            }
+
+                            <div class="card-body d-flex flex-column">
+                                <p class="card-title clamp-3-lines text-black" title="@game.Title" data-bs-toggle="tooltip" data-bs-placement="top">@game.Title</p>
+                                <p class="card-text text-black mb-1"><strong class="text-black">Platform：</strong>@game.Platform?.Name</p>
+                                <p class="card-text text-black mb-1"><strong class="text-black">Release Date：</strong>@game.ReleaseDate.ToString("yyyy/MM/dd")</p>
+                                <p class="card-text text-primary fw-bold mb-2">@game.Price.ToString("C0")</p>
+
+                                <!---------- Button ---------->
+                                <div class="mt-auto">
+                                    <a asp-action="Details" asp-route-id="@game.ID" class="btn btn-outline-info btn-sm">Details</a>
+
+                                    <form asp-controller="Store" asp-action="AddToCart" method="post" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="gameId" value="@game.ID" />
+                                        <input type="hidden" name="platformId" value="@ViewData["CurrentPlatform"]" />
+                                        <input type="hidden" name="sSearch" value="@ViewData["CurrentFilter"]" />
+                                        <button type="submit" class="btn btn-success btn-sm ms-2">Add to Cart</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+
+            <!---------- Pagination ---------->
+            <div class="d-flex justify-content-center mt-4">
+                @Html.PagedListPager(
+                    Model,
+                    page => Url.Action("Index", new {
+                        page,
+                        PlatformID = ViewData["CurrentPlatform"],
+                        sSearch = ViewData["CurrentFilter"]
+                    }),
+                    new PagedListRenderOptions {
+                        DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded,
+                        DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded,
+                        DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded,
+                        DisplayLinkToNextPage = PagedListDisplayMode.IfNeeded,
+                        DisplayLinkToIndividualPages = true,
+                        LinkToIndividualPageFormat = "{0}",
+                        UlElementClasses = new[] { "pagination" },
+                        LiElementClasses = new[] { "page-item" },
+                        PageClasses = new[] { "page-link" }
+                    })
+            </div>
+        </div>
+    </div>
+</section>

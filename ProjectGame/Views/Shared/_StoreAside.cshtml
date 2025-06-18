@@ -1,0 +1,58 @@
+﻿@* Views/Shared/_StoreAside.cshtml *@
+
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+@{
+    var currentUser = await UserManager.GetUserAsync(User);
+    var displayName = currentUser?.Name ?? "Guest";
+}
+
+<head>
+    <!---------- CSS ---------->
+    <link rel="stylesheet" href="~/css/styleStore.css" asp-append-version="true" />
+    <!---------- icon ---------->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+
+<div class="aside col-md-3">
+    <div class="nav-title">
+        <p>Welcome to <span class="logo-game">Game</span> <span class="logo-box">Box</span> !</p>
+        <p class="user-name">Hello, @displayName</p>
+    </div>
+
+    <ul class="nav" style="list-style: none;">
+        <li>
+            <a asp-action="Index" class="text-decoration-none">
+                <span class="material-symbols-outlined">stadia_controller</span>
+                Store
+            </a>
+        </li>
+        <li>
+            <a asp-action="Cart" class="text-decoration-none">
+                <span class="material-symbols-outlined">shopping_cart</span>
+                Cart
+                @if (ViewBag.CartCount > 0)
+                {
+                    <span class="badge bg-warning align-middle m-2 cart-count">
+                        @ViewBag.CartCount
+                    </span>
+                }
+            </a>
+        </li>
+        <li>
+            <a asp-action="History" class="text-decoration-none">
+                <span class="material-symbols-outlined">history</span>
+                History
+            </a>
+        </li>
+        <li>
+            <a href="#" onclick="if(confirm('Are you sure to Log Out?')) { document.getElementById('logoutForm').submit(); } return false;" class="text-decoration-none">
+                <span class="material-symbols-outlined">logout</span>
+                Logout
+            </a>
+            <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" method="post" class="d-none">
+                @Html.AntiForgeryToken()
+            </form>
+        </li>
+    </ul>
+</div>

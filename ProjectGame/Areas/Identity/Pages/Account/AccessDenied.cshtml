@@ -1,0 +1,11 @@
+﻿@page
+@model AccessDeniedModel
+@{
+    ViewData["Title"] = "Access denied";
+}
+
+<header>
+    <h1 class="text-danger">拒絕存取</h1>
+    <p>你沒有權限存取這個頁面。</p>
+    <a asp-page="/Account/Login">回到登入頁</a>
+</header>

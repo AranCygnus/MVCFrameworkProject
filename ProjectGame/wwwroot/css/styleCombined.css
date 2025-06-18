@@ -1,0 +1,350 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+
+:root {
+    --bg-black-900: #f2f2f2;
+    --bg-black-100: #fdf9ff;
+    --bg-black-50: #e8dfec;
+    --text-black-900: #302e4d;
+    --text-black-700: #504e70;
+    --text-game: #0070D1;
+    --text-box: #E80000;
+    --shadow-color: rgba(0, 0, 0, 0.35);
+    --combined-100: #2da0a8;
+    --combined-500: #5c6bc0;
+}
+
+body.dark {
+    --bg-black-900: #151515;
+    --bg-black-100: #222222;
+    --bg-black-50: #393939;
+    --text-black-900: #ffffff;
+    --text-black-700: #ededed;
+    --shadow-color: rgba(255, 255, 225, 0.35);
+    --text-game: #107C10;
+    --text-box: #ffd700;
+}
+
+
+section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 80vh;
+}
+
+.main-combined {
+    background: var(--bg-black-100);
+    border-radius: 2rem;
+    box-shadow: 0 5px 15px var(--shadow-color);
+    position: relative;
+    overflow: hidden;
+    min-width: 768px;
+    max-width: 100%;
+    min-height: 480px;
+}
+
+
+form {
+    background: var(--bg-black-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 40px;
+    height: 100%;
+}
+
+
+.combined-title {
+    color: var(--text-black-900);
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 1rem 0;
+}
+
+.info-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .3rem;
+    width: 85%;
+}
+
+.remember-me-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .1rem;
+    width: 90%;
+    letter-spacing: 1px;
+}
+
+
+input {
+    top: 3rem;
+    background: #ededed;
+    border: none;
+    margin: 8px 0;
+    padding: 10px 15px;
+    font-size: .7rem;
+    border-radius: .5rem;
+    width: 100%;
+    outline: none;
+}
+
+label {
+    color: var(--text-black-900);
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+input.checkbox {
+    margin: 10px 0 0 0;
+}
+
+a {
+    color: var(--text-black-900);
+    font-size: .75rem;
+    font-weight: 300;
+    text-decoration: none;
+    margin: .4rem 0;
+}
+
+button {
+    background: var(--combined-100);
+    color: #fff;
+    font-size: 12px;
+    padding: 10px 45px;
+    border: 1px solid transparent;
+    border-radius: .4rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin: 10px 0;
+}
+
+button.hidden {
+    background: transparent;
+    border-color: #fff;
+}
+
+
+/* Tooltip Error Message */
+.error-tooltip {
+    position: absolute;
+    top: -1.8rem;
+    left: 0;
+    background: var(--text-box);
+    color: var(--bg-black-50);
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    z-index: 10;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    animation: fadeout 0.5s ease 2s forwards;
+}
+
+.error-tooltip:empty {
+    display: none;
+}
+
+.error-tooltip:not(:empty) {
+    visibility: visible;
+    opacity: 1;
+}
+
+.error-tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 10px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--text-box) transparent transparent transparent;
+}
+
+
+input.input-error {
+    border: 1px solid red !important;
+    transition: border 0.5s ease;
+}
+
+@keyframes fadeout {
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+
+/* ModelState Error Message */
+.form-error-tooltip {
+    position: relative;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.text-model-only {
+    position: absolute;
+    top: -1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--text-box);
+    color: var(--bg-black-50);
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    border-radius: 4px;
+    white-space: nowrap;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    z-index: 20;
+}
+
+.text-model-only ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.text-model-only:not(:empty) {
+    visibility: visible;
+    opacity: 1;
+}
+
+.text-model-only::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: var(--text-box) transparent transparent transparent;
+}
+
+
+
+/* Animation */
+.form-container {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: all 0.6s ease-in-out;
+}
+
+.sign-in {
+    left: 0;
+    width: 50%;
+    z-index: 2;
+}
+
+.main-combined.active .sign-in {
+    transform: translateX(100%);
+}
+
+.sign-up {
+    left: 0;
+    width: 50%;
+    opacity: 0;
+    z-index: 1;
+}
+
+.main-combined.active .sign-up {
+    transform: translateX(100%);
+    opacity: 1;
+    z-index: 5;
+    animation: move 0.6s;
+}
+
+@keyframes move {
+    0%, 49.99% {
+        opacity: 0;
+        z-index: 1;
+    }
+
+    50%, 100% {
+        opacity: 1;
+        z-index: 5;
+    }
+}
+
+
+.toggle-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: all 0.6s ease-in-out;
+    border-radius: 150px 0 0 100px;
+    z-index: 1000;
+}
+
+.main-combined.active .toggle-container {
+    transform: translateX(-100%);
+    border-radius: 0 150px 100px 0;
+}
+
+.toggle {
+    background: var(--combined-100);
+    height: 100%;
+    background: linear-gradient(to right, #5c6bc0, #2da0a8);
+    color: #ededed;
+    position: relative;
+    left: -100%;
+    height: 100%;
+    width: 200%;
+    transform: translateX(0);
+    transition: all 0.6s ease-in-out;
+}
+
+p {
+    font-size: .9rem;
+    font-weight: 300;
+    line-height: 20px;
+    letter-spacing: .5px;
+    margin: 30px 0;
+}
+
+.main-combined.active .toggle {
+    transform: translateX(50%);
+}
+
+.toggle-panel {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 30px;
+    text-align: center;
+    top: 0;
+    transform: translateX(0);
+    transition: all 0.6s ease-in-out;
+}
+
+.toggle-left {
+    transform: translateX(-200%);
+}
+
+.main-combined.active .toggle-left {
+    transform: translateX(0);
+}
+
+.toggle-right {
+    right: 0;
+    transform: translateX(0);
+}
+
+.main-combined.active .toggle-right {
+    transform: translateX(200%);
+}

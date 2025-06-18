@@ -1,0 +1,123 @@
+﻿@model IEnumerable<ProjectGame.Models.Order>
+
+@{
+    ViewData["Title"] = "History";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/styleStore.css" asp-append-version="true" />
+</head>
+
+<section>
+    <div class="row">
+        <!---------- Aside Sidebar ---------->
+        @await Html.PartialAsync("_StoreAside")
+
+        <!---------- Main Content---------->
+        <div class="col-md-9">
+            <h2>My Shopping History</h2>
+            
+            <hr class="my-3" />
+
+            @if (!Model.Any())
+            {
+                <h4 class="text-warning">There is no order record yet.</h4>
+                <a asp-controller="Store" asp-action="Index" class="btn btn-outline-secondary mt-2">Continue Shopping</a>
+            }
+            else
+            {
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Content</th>
+                            <th>Total</th>
+                            <th>States</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var order in Model)
+                        {
+                            <tr>
+                                <td>@order.OrderDate.ToString("yyyy/MM/dd HH:mm")</td>
+
+                                <td>
+                                    <ul class="mb-0">
+                                        @foreach (var detail in order.OrderDetails)
+                                        {
+                                            <li>
+                                                @detail.Game.Title x @detail.Quantity
+                                                (Unit Price @detail.UnitPrice.ToString("C0"))
+                                                Subtotal @($"{detail.Game.Price * detail.Quantity:C0}")
+                                            </li>
+                                        }
+                                    </ul>
+                                </td>
+
+                                <td>
+                                    <strong>
+                                        @order.OrderDetails.Sum(d => d.UnitPrice * d.Quantity).ToString("C0")
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    @if (order.Status == ProjectGame.Models.OrderStatus.Paid)
+                                    {
+                                        <span class="badge bg-success text-white" style="width: 85px;">Paid</span>
+                                    }
+                                    else if (order.Status == OrderStatus.Unpaid)
+                                    {
+                                        <span class="badge bg-warning text-dark" style="width: 85px;">Unpaid</span>
+                                    }
+                                    else if (order.Status == OrderStatus.Shipped)
+                                    {
+                                        <span class="badge bg-info text-dark" style="width: 85px;">Shipped</span>
+                                    }
+                                    else if (order.Status == OrderStatus.Cancelled)
+                                    {
+                                        <span class="badge bg-danger text-white" style="width: 85px;">Cancelled</span>
+                                    }
+                                    else if (order.Status == OrderStatus.Completed)
+                                    {
+                                        <span class="badge bg-primary text-white" style="width: 85px;">Completed</span>
+                                    }
+                                </td>
+
+                                <td>
+                                    @if (order.Status == OrderStatus.Paid || order.Status == OrderStatus.Cancelled || order.Status == OrderStatus.Completed)
+                                    {
+                                        <a asp-action="OrderDetail" asp-route-id="@order.ID" class="btn btn-outline-info btn-sm" style="width: 85px;">Details</a>
+                                    }
+                                    else if (order.Status == OrderStatus.Unpaid)
+                                    {
+                                        <div class="d-flex flex-column align-items-start">
+                                            <a asp-action="Payment" asp-route-orderId="@order.ID" class="btn btn-success btn-sm mb-2" style="width: 85px;">Pay</a>
+                                            <a asp-action="OrderDetail" asp-route-id="@order.ID" class="btn btn-outline-info btn-sm mb-2" style="width: 85px;">Details</a>
+                                            <form asp-action="CancelOrder" method="post" class="d-inline">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="orderId" value="@order.ID" />
+                                                <button type="submit" class="btn btn-outline-danger btn-sm" style="width: 85px;">Cancel</button>
+                                            </form>
+                                        </div>
+                                    }
+                                    else if (order.Status == OrderStatus.Shipped)
+                                    {
+                                        <div class="d-flex flex-column align-items-start">
+                                            <form asp-action="MarkDelivered" method="post" class="d-inline mb-2">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="orderId" value="@order.ID" />
+                                                <button type="submit" class="btn btn-primary btn-sm" style="width: 85px;">Delivered</button>
+                                            </form>
+                                            <a asp-action="OrderDetail" asp-route-id="@order.ID" class="btn btn-outline-info btn-sm" style="width: 85px;">Details</a>
+                                        </div>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</section>

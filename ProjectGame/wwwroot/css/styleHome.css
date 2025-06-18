@@ -1,0 +1,109 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    scroll-behavior: smooth;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root {
+    --bg-black-900: #f2f2f2;
+    --bg-black-100: #fdf9ff;
+    --bg-black-50: #e8dfec;
+    --text-black-900: #302e4d;
+    --text-black-700: #504e70;
+    --text-game: #0070D1;
+    --text-box: #E80000;
+}
+
+body.dark {
+    --bg-black-900: #151515;
+    --bg-black-100: #222222;
+    --bg-black-50: #393939;
+    --text-black-900: #ffffff;
+    --text-black-700: #ededed;
+    --text-game: #107C10;
+    --text-box: #ffd700;
+}
+
+section {
+    margin: 6.5rem 0;
+}
+
+h2, p {
+    color: var(--text-black-900);
+}
+
+/* Home Image */
+.home-img {
+    width: 100%;
+    margin: 1rem 0;
+}
+.home-img img {
+    width: 100%;
+    height: auto;
+    border-radius: 1rem;
+    display: block;
+}
+
+.platform-img {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0;
+    gap: 1rem;
+}
+
+.platform-img img {
+    width: 30%;
+    display: block;
+    flex-grow:1;
+    height: auto;
+    object-fit: contain;
+    border-radius: 1rem;
+}
+
+
+/* Left and Right Arrows */
+.carousel-control-prev,
+.carousel-control-next {
+    opacity: 1 !important;
+    z-index: 10;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-image: none !important;
+}
+
+.carousel-control-prev .material-symbols-outlined,
+.carousel-control-next .material-symbols-outlined {
+    color: #E80000;
+    font-size: 2rem;
+    background-color: #fff;
+    border-radius: 50%;
+    padding: 0.3rem;
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+
+.carousel-control-prev .material-symbols-outlined:hover,
+.carousel-control-next .material-symbols-outlined:hover {
+    color: #fff;
+    background-color: #E80000;
+}
+
+
+/* Game Card */
+.clamp-3-lines {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 4.5em;
+}

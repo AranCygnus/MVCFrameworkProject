@@ -1,0 +1,149 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.payment-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding-bottom: 60px;
+}
+
+.payment-wrapper form {
+    background: #ededed;
+    border-radius: 5px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    padding: 160px 20px 20px;
+    width: 600px;
+}
+
+form .inputBox {
+    margin-top: 20px;
+}
+
+.inputBox span {
+    display: block;
+    color: #999;
+    padding-bottom: 5px;
+}
+
+.inputBox input,
+.inputBox select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    color: #444;
+}
+
+form .flexbox {
+    display: flex;
+    gap: 15px;
+}
+
+.flexbox .inputBox {
+    flex: 1 1 150px;
+}
+
+.card-container {
+    margin-bottom: -150px;
+    position: relative;
+    height: 250px;
+    width: 400px;
+}
+
+.card-container .front,
+.card-container .back {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    border-radius: 5px;
+    backface-visibility: hidden;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+    transition: transform 0.4s ease-out;
+}
+
+.front {
+    background: linear-gradient(45deg, #00abf0, #00ffbf);
+    padding: 20px;
+    transform: perspective(1000px) rotateY(0deg);
+}
+
+.front .image {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 10px;
+}
+
+.front .card-number-box {
+    padding: 30px 0;
+    font-size: 22px;
+    color: #fff;
+    min-height: 24px;
+    letter-spacing: 2px;
+}
+
+.front .flexbox {
+    display: flex;
+}
+
+.front .flexbox .box {
+    font-size: 15px;
+    color: #fff;
+}
+
+.front .flexbox .box:first-child {
+    margin-right: auto;
+}
+
+.back {
+    background: linear-gradient(45deg, #00abf0, #00ffbf);
+    padding: 20px 0;
+    text-align: right;
+    transform: perspective(1000px) rotateY(180deg);
+}
+
+.back .stripe {
+    background: #000;
+    width: 100%;
+    margin: 10px 0;
+    height: 50px;
+}
+
+.back .box {
+    padding: 0 20px;
+}
+
+.back .box span {
+    color: #fff;
+    font-size: 15px;
+}
+
+.back .cvv-box {
+    height: 50px;
+    padding: 10px;
+    margin-top: 5px;
+    color: #333;
+    background: #fff;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.back .box img {
+    margin-top: 30px;
+    height: 50px;
+}
