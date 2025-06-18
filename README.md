@@ -87,7 +87,7 @@ This project is a demonstration of an online game store system, featuring user a
 
 
 ## 專案結構 | Project Structure
-
+```bash
 │
 ├── Controllers/        控制器 | Controllers
 ├── Models/             資料模型（資料庫用） | Data Models
@@ -99,7 +99,7 @@ This project is a demonstration of an online game store system, featuring user a
 ├── appsettings.json    設定檔 | Configuration
 ├── ProjectGame.sln     方案檔 | Solution File
 └── ...
-
+```
 
 ## 備註 | Notes
 
